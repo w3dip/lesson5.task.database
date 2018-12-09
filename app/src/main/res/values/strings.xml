@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">lesson5.task.database</string>
+    <string name="empty_text">There is not value</string>
+</resources>
