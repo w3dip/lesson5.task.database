@@ -1,29 +1,28 @@
 package ru.sberbank.lesson5.task.database;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
-
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.sberbank.lesson5.task.database.adapters.NoteAdapter;
 import ru.sberbank.lesson5.task.database.adapters.NoteEntry;
-import ru.sberbank.lesson5.task.database.dao.NoteDbHelper;
 import ru.sberbank.lesson5.task.database.dao.NoteService;
 
+import static ru.sberbank.lesson5.task.database.adapters.NoteAdapter.noteColor;
+import static ru.sberbank.lesson5.task.database.adapters.NoteAdapter.textColor;
+import static ru.sberbank.lesson5.task.database.adapters.NoteAdapter.textSize;
 import static ru.sberbank.lesson5.task.database.dao.NoteService.getInstance;
+import static ru.sberbank.lesson5.task.database.utils.Helpers.getRealProgress;
+import static ru.sberbank.lesson5.task.database.utils.Helpers.getSettingName;
 
 public class MainActivity extends Activity {
+    private SharedPreferences settings;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -48,14 +47,22 @@ public class MainActivity extends Activity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        settings = getApplicationContext().getSharedPreferences(getSettingName(getResources(), R.string.settings_filename), MODE_PRIVATE);
         mAdapter = new NoteAdapter(notes);
         mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void onStart() {
+        textSize = Integer.valueOf(getRealProgress(settings.getInt(getSettingName(getResources(), R.string.text_size_setting), 0)));
+        textColor = settings.getInt(getSettingName(getResources(), R.string.text_color_setting), getResources().getColor(R.color.text_color, null));
+        noteColor = settings.getInt(getSettingName(getResources(), R.string.note_color_setting), getResources().getColor(R.color.note_color, null));
         notes.clear();
         notes.addAll(noteService.getAll());
+        mRecyclerView.setAdapter(null);
+        mRecyclerView.setLayoutManager(null);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter.notifyDataSetChanged();
         super.onStart();
     }

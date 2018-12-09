@@ -14,10 +14,15 @@ import ru.sberbank.lesson5.task.database.EditNoteActivity;
 import ru.sberbank.lesson5.task.database.R;
 import ru.sberbank.lesson5.task.database.dao.NoteContract.Note;
 
+import static android.graphics.PorterDuff.Mode.SRC_ATOP;
+
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
     private static final int MAX_NOTE_LENGTH = 140;
 
     private List<NoteEntry> notes;
+    public static int textSize;
+    public static int noteColor;
+    public static int textColor;
 
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         public Long id;
@@ -26,6 +31,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         public NoteViewHolder(View v) {
             super(v);
             note = v.findViewById(R.id.notes_item_content);
+            note.setTextSize(textSize);
+            note.getBackground().setColorFilter(noteColor, SRC_ATOP);
+            note.setTextColor(textColor);
             note.setOnClickListener((item) -> {
                 Context context = item.getRootView().getContext();
                 Intent intent = new Intent(context, EditNoteActivity.class);
