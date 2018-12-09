@@ -12,7 +12,6 @@ import java.util.List;
 
 import ru.sberbank.lesson5.task.database.EditNoteActivity;
 import ru.sberbank.lesson5.task.database.R;
-import ru.sberbank.lesson5.task.database.dao.NoteContract;
 import ru.sberbank.lesson5.task.database.dao.NoteContract.Note;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
@@ -28,7 +27,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             super(v);
             note = v.findViewById(R.id.notes_item_content);
             note.setOnClickListener((item) -> {
-                TextView textView = (TextView)item;
                 Context context = item.getRootView().getContext();
                 Intent intent = new Intent(context, EditNoteActivity.class);
                 intent.putExtra(Note._ID, id);

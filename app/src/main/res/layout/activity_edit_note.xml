@@ -8,6 +8,7 @@
 
     <EditText
         android:id="@+id/editNoteText"
+        android:focusable="false"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:ems="10"
@@ -30,12 +31,23 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-            android:id="@+id/editNoteBtn"
+            android:id="@+id/editModeBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="left"
             android:layout_weight="1"
-            android:text="Save note"
+            android:text="Enable edit mode"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="427dp" />
+
+        <Button
+            android:id="@+id/saveNoteBtn"
+            android:enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Save"
             tools:layout_editor_absoluteX="33dp"
             tools:layout_editor_absoluteY="427dp" />
 
